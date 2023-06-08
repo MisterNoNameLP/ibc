@@ -13,8 +13,13 @@ local len = require("utf8").len
 
 --===== functions =====--
 local function exec(command)
+	local file 
 	print("exec:", command)
-	--os.execute(command .. ">")
+	os.execute(command .. " > " .. execResultFile)
+	file = io.open(execResultFile, "r")
+	lastResult = file:read("*a")
+	file:close()
+	os.execute("rm " .. execResultFile)
 end
 
 --===== init =====--
@@ -25,7 +30,9 @@ end
 do --check if execResult file already exists, to prevent unwantet overwriting
 	local file = io.open(execResultFile, "r")
 	if file ~= nil then
-		print("execResultFile (" .. execResultFile .. ") already exitst. Please delete it manually before running the interactive bc ")
+		print("execResultFile (" .. execResultFile .. ") already exitst. Please delete it manually before running the interactive bc")
+		file:close()
+		os.exit(1)
 	end	
 end
 
@@ -34,5 +41,5 @@ if len(args) > 0 then --non interactive mode
 	exec("echo " .. args .. " | bc")
 	os.exit(0)
 else --interactive mode
-
+	
 end
