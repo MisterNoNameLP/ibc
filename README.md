@@ -3,7 +3,7 @@ ibc (InteractiveBasicCalculator) is an interactive cli frontend for the linux co
 # Features
 - Comma (',') symbols can be used to declade a decimal number. Wich is useful on european keyboards.
 
-- In interactive mode the result of the last calculation is used as starting point for new calculations, if it does not starting with an number. Simular to the behaviour of graphical calulatiors.  
+- In interactive mode the result of the last calculation is used as starting point for new calculations, if is not starting with an number. Simular to the behaviour of graphical calulatiors.  
 Example:
 ```
 > 1+1
@@ -18,6 +18,9 @@ Example:
 # Instalation
 Copy the `ibc` file into an folder containend in pur $PATH variable.  
 execute `chmod +x PATH/TO/FILE`
+
+# Depencies
+lua5.1+/luaJIT
 
 # License
 ibc is published under the terms of the MIT license

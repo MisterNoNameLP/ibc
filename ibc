@@ -1,5 +1,5 @@
 #!/bin/lua
-local version = "1.0.1"
+local version = "1.0.2"
 
 --[[
 	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
@@ -35,9 +35,6 @@ local execResultFile = "/tmp/.ibcExecutionResults"
 local args = ""
 local lastResult
 
--- aliases
-local len = require("utf8").len
-
 --===== functions =====--
 local function exec(command)
 	local file 
@@ -63,7 +60,7 @@ do --check if execResult file already exists, to prevent unwantet overwriting
 end
 
 --===== program start =====--
-if len(args) > 0 then --non interactive mode
+if #args > 0 then --non interactive mode
 	if args == "-v" or args == "--version" then
 		print("ibc v" .. tostring(version))
 		os.exit(0)
