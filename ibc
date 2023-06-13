@@ -1,4 +1,31 @@
 #!/bin/lua
+local version = "1.0"
+
+--[[
+	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
+
+	ibc is published under the terms of the MIT license
+
+	lbc Copyright (c) 2023 MisterNoNameLP
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+]]
 
 --===== conf =====--
 local execResultFile = "/tmp/.ibcExecutionResults"
@@ -14,10 +41,9 @@ local len = require("utf8").len
 --===== functions =====--
 local function exec(command)
 	local file 
-	print("exec:", command)
 	os.execute(command .. " > " .. execResultFile)
 	file = io.open(execResultFile, "r")
-	lastResult = file:read("*a")
+	lastResult = file:read("*a"):sub(0, -2)
 	file:close()
 	os.execute("rm " .. execResultFile)
 end
@@ -38,8 +64,41 @@ end
 
 --===== program start =====--
 if len(args) > 0 then --non interactive mode
+	if args == "-v" or args == "--version" then
+		print("ibc v" .. tostring(version))
+	elseif args == "-h" or args == "--help" then
+		print("Usage: ibc [calculations]")
+		print("Uses bc to make given calculatios")
+		print("If executet without any arguments given an interactive mode starts")
+		print()
+		print("Options:")
+		print("-h --help \t show this help and exit")
+		print("-v --version \t output version and exit")
+	end
+
 	exec("echo " .. args .. " | bc")
 	os.exit(0)
 else --interactive mode
-	
+	while true do
+		io.write("> ")
+		args = io.read("*l")
+		args = args:gsub(",", ".")
+		if args == "q" or args == "quit" then
+			break
+		elseif args == "h" or args == "help" then
+			print("Interactive basic calculator (ibc)")
+			print("Type any valid bc calculation to get result.")
+			print("If the calculation does not start with a number the last result is used as starting point.")
+			print("Note: comma (',') symbols can be used to declade a decimal number. So '0,1' is a valid input.")
+			print()
+			print("Type 'q' or 'quit' to exit")
+			print("Type 'h' or 'help' for help")
+		elseif args:sub(1, 1):match("[%d.,]") then
+			exec("echo " .. args .. " | bc")
+			print(lastResult)
+		else	
+			exec("echo " .. tostring(lastResult) .. args .. " | bc")
+			print(lastResult)
+		end
+	end
 end
