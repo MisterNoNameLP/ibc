@@ -1,5 +1,5 @@
 #!/bin/lua
-local version = "1.0"
+local version = "1.0.1"
 
 --[[
 	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
@@ -66,6 +66,7 @@ end
 if len(args) > 0 then --non interactive mode
 	if args == "-v" or args == "--version" then
 		print("ibc v" .. tostring(version))
+		os.exit(0)
 	elseif args == "-h" or args == "--help" then
 		print("Usage: ibc [calculations]")
 		print("Uses bc to make given calculatios")
@@ -74,9 +75,11 @@ if len(args) > 0 then --non interactive mode
 		print("Options:")
 		print("-h --help \t show this help and exit")
 		print("-v --version \t output version and exit")
+		os.exit(0)
 	end
-
+	args = args:gsub(",", ".")
 	exec("echo " .. args .. " | bc")
+	print(lastResult)
 	os.exit(0)
 else --interactive mode
 	while true do
@@ -84,7 +87,7 @@ else --interactive mode
 		args = io.read("*l")
 		args = args:gsub(",", ".")
 		if args == "q" or args == "quit" then
-			break
+			os.exit(0)
 		elseif args == "h" or args == "help" then
 			print("Interactive basic calculator (ibc)")
 			print("Type any valid bc calculation to get result.")
