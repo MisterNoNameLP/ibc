@@ -17,7 +17,7 @@ Example:
 
 # Instalation
 Copy the `ibc` file into an folder containend in pur $PATH variable.  
-execute `chmod +x PATH/TO/FILE`
+Execute `chmod +x PATH/TO/FILE`
 
 # Depencies
 lua5.1+/luaJIT
@@ -25,7 +25,7 @@ lua5.1+/luaJIT
 # License
 ibc is published under the terms of the MIT license
 
-lbc Copyright (c) 2023 MisterNoNameLP
+ibc Copyright (c) 2023 MisterNoNameLP
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
