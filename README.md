@@ -17,7 +17,7 @@ Example:
 
 # Instalation
 Install lua5.1+, if not installed already.  
-Copy the `ibc` file into an folder containend in pur $PATH variable.  
+Copy the `ibc` file into an folder containend in your $PATH environment variable.  
 Execute `chmod +x PATH/TO/FILE`
 
 # License
