@@ -16,11 +16,9 @@ Example:
 `ibc -h`
 
 # Instalation
+Install lua5.1+, if not installed already.  
 Copy the `ibc` file into an folder containend in pur $PATH variable.  
 Execute `chmod +x PATH/TO/FILE`
-
-# Depencies
-lua5.1+/luaJIT
 
 # License
 ibc is published under the terms of the MIT license
