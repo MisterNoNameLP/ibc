@@ -1,5 +1,5 @@
 #!/bin/lua
-local version = "1.0.3"
+local version = "1.0.4"
 
 --[[
 	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
@@ -27,9 +27,6 @@ local version = "1.0.3"
 	SOFTWARE.
 ]]
 
---===== conf =====--
-local execResultFile = "/tmp/.ibcExecutionResults"
-
 --===== vars =====--
 --runtime vars
 local args = ""
@@ -37,26 +34,14 @@ local lastResult
 
 --===== functions =====--
 local function exec(command)
-	local file 
-	os.execute(command .. " > " .. execResultFile)
-	file = io.open(execResultFile, "r")
-	lastResult = file:read("*a"):sub(0, -2)
-	file:close()
-	os.execute("rm " .. execResultFile)
+	local output = io.popen(command)
+	lastResult = output:read("*a"):sub(0, -2)
+	output:close()
 end
 
 --===== init =====--
 for _, v in ipairs({...}) do
 	args = args .. tostring(v)
-end
-
-do --check if execResult file already exists, to prevent unwantet overwriting
-	local file = io.open(execResultFile, "r")
-	if file ~= nil then
-		print("execResultFile (" .. execResultFile .. ") already exitst. Please delete it manually before running the interactive bc")
-		file:close()
-		os.exit(1)
-	end	
 end
 
 --===== program start =====--
