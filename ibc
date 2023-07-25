@@ -1,5 +1,5 @@
 #!/bin/lua
-local version = "1.0.4"
+local version = "1.0.5"
 
 --[[
 	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
@@ -61,7 +61,7 @@ if #args > 0 then --non interactive mode
 	end
 	args = args:gsub(",", ".")
 	args = args:gsub("[ \t]", "")
-	exec("echo " .. args .. " | bc")
+	exec("echo " .. args .. " | bc -l")
 	print(lastResult)
 	os.exit(0)
 else --interactive mode
@@ -81,10 +81,10 @@ else --interactive mode
 			print("Type 'q' or 'quit' to exit")
 			print("Type 'h' or 'help' for help")
 		elseif args:sub(1, 1):match("[%d.,]") then
-			exec("echo " .. args .. " | bc")
+			exec("echo " .. args .. " | bc -l")
 			print(lastResult)
 		else	
-			exec("echo " .. tostring(lastResult) .. args .. " | bc")
+			exec("echo " .. tostring(lastResult) .. args .. " | bc -l")
 			print(lastResult)
 		end
 	end
