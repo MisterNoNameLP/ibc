@@ -1,5 +1,5 @@
 #!/bin/lua
-local version = "1.0.6"
+local version = "1.0.7"
 
 --[[
 	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
@@ -55,7 +55,7 @@ end
 --===== program start =====--
 if #args > 0 then --non interactive mode
 	if args == "-v" or args == "--version" then
-		print("ibc v" .. tostring(version))
+		print("ibc " .. tostring(version))
 		os.exit(0)
 	elseif args == "-h" or args == "--help" then
 		print("Usage: ibc [calculations]")
@@ -73,6 +73,7 @@ if #args > 0 then --non interactive mode
 	print(lastResult)
 	os.exit(0)
 else --interactive mode
+	print("ibc " .. version)
 	while true do
 		io.write("> ")
 		args = io.read("*l")
@@ -81,10 +82,10 @@ else --interactive mode
 		if args == "q" or args == "quit" then
 			os.exit(0)
 		elseif args == "h" or args == "help" then
-			print("Interactive basic calculator (ibc)")
+			print("Interactive basic calculator (ibc) " .. version)
 			print("Type any valid bc calculation to get result.")
 			print("If the calculation does not start with a number the last result is used as starting point.")
-			print("Note: comma (',') symbols can be used to declade a decimal number. So '0,1' is a valid input.")
+			print("Note: comma (',') symbols can be used to declade decimal numbers. So '0,1' is a valid input.")
 			print()
 			print("Type 'q' or 'quit' to exit")
 			print("Type 'h' or 'help' for help")
