@@ -1,5 +1,5 @@
 #!/bin/lua
-local version = "1.0.7"
+local version = "1.0.8"
 
 --[[
 	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
@@ -35,13 +35,16 @@ local lastResult
 --===== functions =====--
 local function exec(command)
 	local output = io.popen(command)
-	local lastNonZeroNumberPos
+	local dotPos, lastNonZeroNumberPos
 	lastResult = output:read("*a"):sub(0, -2)
 	output:close()
-	for c = 0, #lastResult do
-		local char = lastResult:sub(c, c)
-		if char ~= "0" and char ~= "." then
-			lastNonZeroNumberPos = c
+	dotPos = lastResult:find("%.")
+	if dotPos then
+		for c = dotPos, #lastResult do
+			local char = lastResult:sub(c, c)
+			if char ~= "0" and char ~= "." then
+				lastNonZeroNumberPos = c
+			end
 		end
 	end
 	lastResult = lastResult:sub(0, lastNonZeroNumberPos)
