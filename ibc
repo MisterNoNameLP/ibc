@@ -1,5 +1,5 @@
 #!/bin/lua
-local version = "1.0.8"
+local version = "1.0.9"
 
 --[[
 	InteractiveBasicCalculator (ibc) is an interactive frontend for bc.
@@ -40,6 +40,7 @@ local function exec(command)
 	output:close()
 	dotPos = lastResult:find("%.")
 	if dotPos then
+		lastNonZeroNumberPos = dotPos - 1
 		for c = dotPos, #lastResult do
 			local char = lastResult:sub(c, c)
 			if char ~= "0" and char ~= "." then
